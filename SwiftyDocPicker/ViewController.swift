@@ -17,10 +17,12 @@ class ViewController: UIViewController, CloudPickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.documents =  []
         cloudPicker = CloudPicker(presentationController: self)
         cloudPicker.delegate = self
     }
     func didPickDocuments(documents: [CloudPicker.Document]?) {
+        self.documents = []
         documents?.forEach {
             self.documents.append($0)
         }

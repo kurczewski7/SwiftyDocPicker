@@ -40,9 +40,10 @@ class CloudPicker: NSObject {
     
     init(presentationController: UIViewController) {
         super.init()
+        
         self.presentationController = presentationController
+        print("INIT")
     }
-    
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
             self.pickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
@@ -50,10 +51,8 @@ class CloudPicker: NSObject {
             self.sourceType = type
             self.presentationController?.present(self.pickerController!, animated: true)
         }
-        
         return action
     }
-    
     public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString]) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
             self.pickerController = UIDocumentPickerViewController(documentTypes: keys as [String], in: .open)
@@ -64,10 +63,8 @@ class CloudPicker: NSObject {
         }
         return  action
     }
-    
     public func present(from sourceView: UIView) {
         //let xx = [kUTTypeText, kUTTypeFolder, kUTTypeArchive, kUTTypeFileURL,kUTTypePlainText, kUTTypeZipArchive, kUTTypeGNUZipArchive, kUTTypeUTF8PlainText, kUTTypeUTF16ExternalPlainText, kUTTypeUTF8TabSeparatedText, kUTTypeUTF16PlainText]
-
         let alertController = UIAlertController(title: "Select From", message: nil, preferredStyle: .actionSheet)
         if let action = self.folderAction(for: .folder, title: "Folder") {
             alertController.addAction(action)
@@ -80,15 +77,16 @@ class CloudPicker: NSObject {
         if let action = self.fileAction(for: .filesA, title: "Files archive", keysOption: keys2) {
             alertController.addAction(action)
         }
-
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView
             alertController.popoverPresentationController?.sourceRect = sourceView.bounds
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
         self.presentationController?.present(alertController, animated: true)
+    }
+    deinit {
+        print("DEINIT")
     }
 }
 extension CloudPicker: UIDocumentPickerDelegate {
@@ -111,11 +109,17 @@ extension CloudPicker: UIDocumentPickerDelegate {
                 do {
                     let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
                     let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
+                    var isFound = false
                     
                     switch sourceType {
                         case .filesA, .filesB :
                             let document = Document(fileURL: pickedURL)
-                            documents.append(document)
+                            for elem in documents {
+                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true    }
+                            }
+                            if !isFound {
+                              documents.append(document)
+                            }
 
                         case .folder:
                             for case let fileURL as URL in fileList! {
