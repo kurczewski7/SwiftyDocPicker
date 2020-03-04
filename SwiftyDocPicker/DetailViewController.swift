@@ -9,10 +9,15 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    var textViewValue = ""
+    var descriptionLabelValue = ""
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        textView.text = textViewValue           // "To jest textview"
+        descriptionLabel.text = descriptionLabelValue       //"To jest label"
         // Do any additional setup after loading the view.
     }
     

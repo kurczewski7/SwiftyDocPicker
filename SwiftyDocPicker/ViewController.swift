@@ -27,6 +27,18 @@ class ViewController: UIViewController, CloudPickerDelegate {
     @IBAction func pickPressed(_ sender: Any) {
         cloudPicker.present(from: view)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("segue: \(String(describing: segue.identifier))")
+      if segue.identifier == "showFile" {
+        if let nextViewController = segue.destination as? DetailViewController {
+            let document = documents[0]
+            
+            print("nextViewController:\(nextViewController)")
+            nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
+            nextViewController.textViewValue = document.fileURL.absoluteString
+            }
+      }
+    }
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {

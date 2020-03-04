@@ -49,6 +49,7 @@
                                         <size key="customSize" width="140" height="133"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="VYZ-wp-cQn" id="ynT-eO-AeF"/>
+                                            <segue destination="JWA-Zc-d6i" kind="show" identifier="showFile" id="CHo-MA-waO"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -61,7 +62,7 @@
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Dokumenty" largeTitleDisplayMode="always" id="bjU-Zg-Bie">
+                    <navigationItem key="navigationItem" title="Dokumenty" largeTitleDisplayMode="never" id="bjU-Zg-Bie">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="M9Z-w0-xgQ">
                             <connections>
                                 <action selector="pickPressed:" destination="BYZ-38-t0r" id="f8C-tf-diJ"/>
@@ -74,7 +75,55 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="97.601199400299862"/>
+            <point key="canvasLocation" x="-12191.200000000001" y="-4521.5892053973021"/>
+        </scene>
+        <!-- Detail View Controller-->
+        <scene sceneID="uKe-Vc-z0q">
+            <objects>
+                <viewController id="JWA-Zc-d6i" userLabel=" Detail View Controller" customClass="DetailViewController" customModule="SwiftyDocPickerNew" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Trq-rg-7l6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iaF-UY-5gA">
+                                <rect key="frame" x="0.0" y="45" width="375" height="578"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nVA-tr-0P6">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="oif-L9-7a2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nVA-tr-0P6" firstAttribute="leading" secondItem="OHG-9u-0oJ" secondAttribute="leading" id="Cei-MC-bhg"/>
+                            <constraint firstItem="nVA-tr-0P6" firstAttribute="top" secondItem="OHG-9u-0oJ" secondAttribute="top" id="Eg8-90-r2u"/>
+                            <constraint firstItem="iaF-UY-5gA" firstAttribute="trailing" secondItem="OHG-9u-0oJ" secondAttribute="trailing" id="Ggg-Cz-387"/>
+                            <constraint firstItem="OHG-9u-0oJ" firstAttribute="bottom" secondItem="iaF-UY-5gA" secondAttribute="bottom" id="R6z-j7-Y2i"/>
+                            <constraint firstItem="iaF-UY-5gA" firstAttribute="top" secondItem="nVA-tr-0P6" secondAttribute="bottom" constant="20" id="U7w-uP-rVB"/>
+                            <constraint firstItem="nVA-tr-0P6" firstAttribute="trailing" secondItem="OHG-9u-0oJ" secondAttribute="trailing" id="UqQ-m5-Spg"/>
+                            <constraint firstItem="iaF-UY-5gA" firstAttribute="leading" secondItem="OHG-9u-0oJ" secondAttribute="leading" id="oAm-Mf-KLl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OHG-9u-0oJ"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Plik" largeTitleDisplayMode="never" id="Ly8-xq-uP0"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="nVA-tr-0P6" id="NSb-x9-Xmo"/>
+                        <outlet property="textView" destination="iaF-UY-5gA" id="8Bg-NG-CIj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FsW-W4-Q4f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-11124" y="-4522.4887556221893"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yQv-hY-T2R">
@@ -96,7 +145,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ytl-JY-uD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="97.601199400299862"/>
+            <point key="canvasLocation" x="-13260" y="-4520"/>
         </scene>
     </scenes>
 </document>

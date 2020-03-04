@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C63154C24100226005096AA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63154B24100226005096AA /* DetailViewController.swift */; };
 		30AF748F232DE56A006D10C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF748E232DE56A006D10C7 /* AppDelegate.swift */; };
 		30AF7493232DE56A006D10C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF7492232DE56A006D10C7 /* ViewController.swift */; };
 		30AF7496232DE56A006D10C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30AF7494232DE56A006D10C7 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C63154B24100226005096AA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		30AF748B232DE56A006D10C7 /* SwiftyDocPickerNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyDocPickerNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AF748E232DE56A006D10C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30AF7492232DE56A006D10C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,8 +65,9 @@
 			isa = PBXGroup;
 			children = (
 				30AF748E232DE56A006D10C7 /* AppDelegate.swift */,
-				30AF7492232DE56A006D10C7 /* ViewController.swift */,
 				30AF7494232DE56A006D10C7 /* Main.storyboard */,
+				30AF7492232DE56A006D10C7 /* ViewController.swift */,
+				2C63154B24100226005096AA /* DetailViewController.swift */,
 				30AF7497232DE56D006D10C7 /* Assets.xcassets */,
 				30AF7499232DE56D006D10C7 /* LaunchScreen.storyboard */,
 				30AF749C232DE56D006D10C7 /* Info.plist */,
@@ -153,6 +156,7 @@
 				30EBC565233BF329001002D9 /* Colors.swift in Sources */,
 				30AF74A7232DE708006D10C7 /* CloudPicker.swift in Sources */,
 				30AF748F232DE56A006D10C7 /* AppDelegate.swift in Sources */,
+				2C63154C24100226005096AA /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
