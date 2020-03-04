@@ -73,7 +73,7 @@ class CloudPicker: NSObject {
             alertController.addAction(action)
         }
         let keys1 =  [kUTTypeText , kUTTypePlainText, kUTTypeUTF8PlainText, kUTTypeUTF8TabSeparatedText, kUTTypeUTF16PlainText, kUTTypeUTF16ExternalPlainText]
-        if let action = self.fileAction(for: .filesA, title: "Files txt", keysOption: keys1) {
+        if let action = self.fileAction(for: .filesA, title: "Files text", keysOption: keys1) {
             alertController.addAction(action)
         }
         let keys2 = [kUTTypeArchive, kUTTypeZipArchive,kUTTypeGNUZipArchive]
@@ -91,7 +91,7 @@ class CloudPicker: NSObject {
         self.presentationController?.present(alertController, animated: true)
     }
 }
-extension CloudPicker: UIDocumentPickerDelegate {   //UICloudPickerDelegate
+extension CloudPicker: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else {   return    }
          documentFromURL(pickedURL: url)
