@@ -11,6 +11,8 @@ import UIKit
 class DetailViewController: UIViewController {
     var textViewValue = ""
     var descriptionLabelValue = ""
+    var indexpathValue = IndexPath(item: 0, section: 0)
+    
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var descriptionLabel: UILabel!
     

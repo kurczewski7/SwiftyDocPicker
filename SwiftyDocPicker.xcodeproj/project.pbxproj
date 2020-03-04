@@ -64,14 +64,14 @@
 		30AF748D232DE56A006D10C7 /* SwiftyDocPicker */ = {
 			isa = PBXGroup;
 			children = (
+				30AF749C232DE56D006D10C7 /* Info.plist */,
 				30AF748E232DE56A006D10C7 /* AppDelegate.swift */,
+				30AF7499232DE56D006D10C7 /* LaunchScreen.storyboard */,
 				30AF7494232DE56A006D10C7 /* Main.storyboard */,
+				30AF7497232DE56D006D10C7 /* Assets.xcassets */,
+				30AF74A6232DE708006D10C7 /* CloudPicker.swift */,
 				30AF7492232DE56A006D10C7 /* ViewController.swift */,
 				2C63154B24100226005096AA /* DetailViewController.swift */,
-				30AF7497232DE56D006D10C7 /* Assets.xcassets */,
-				30AF7499232DE56D006D10C7 /* LaunchScreen.storyboard */,
-				30AF749C232DE56D006D10C7 /* Info.plist */,
-				30AF74A6232DE708006D10C7 /* CloudPicker.swift */,
 				30EBC562233BE10B001002D9 /* DocumentCell.swift */,
 				30EBC564233BF329001002D9 /* Colors.swift */,
 				30EBC566233BF3C6001002D9 /* Extensions.swift */,

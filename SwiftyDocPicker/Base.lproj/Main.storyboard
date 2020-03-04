@@ -49,7 +49,6 @@
                                         <size key="customSize" width="140" height="133"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="VYZ-wp-cQn" id="ynT-eO-AeF"/>
-                                            <segue destination="JWA-Zc-d6i" kind="show" identifier="showFile" id="CHo-MA-waO"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -71,6 +70,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="xOe-a3-XHb" id="rQC-40-kd8"/>
+                        <segue destination="JWA-Zc-d6i" kind="show" identifier="showDetail" id="n9T-Fe-nhH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
