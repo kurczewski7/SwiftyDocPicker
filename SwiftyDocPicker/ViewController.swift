@@ -37,21 +37,22 @@ class ViewController: UIViewController, CloudPickerDelegate {
         if let nextViewController = segue.destination as? DetailViewController {
             let document = documents[self.indexpath.row]            
             print("nextViewController:\(nextViewController)")
+            let textLines = Setup.getText(fromCloudFilePath: document.fileURL, encodingSystem: .utf8)
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
-            nextViewController.textViewValue = document.fileURL.absoluteString
+            nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + Setup.mergeText(forStrings: textLines)
             }
       }
     }
-    func getCurrentItem(for collectionCell: UICollectionViewCell) -> Int {
-        //let ii = collectionView.indexPath(for: UICollectionViewCell)
-        if let indexPath = collectionView.indexPath(for: collectionCell) {
-            // use indexPath to delete the cell
-            return indexPath.row
-        }
-        else {
-            return 0
-        }
-    }
+//    func getCurrentItem(for collectionCell: UICollectionViewCell) -> Int {
+//        //let ii = collectionView.indexPath(for: UICollectionViewCell)
+//        if let indexPath = collectionView.indexPath(for: collectionCell) {
+//            // use indexPath to delete the cell
+//            return indexPath.row
+//        }
+//        else {
+//            return 0
+//        }
+//    }
 
 }
 

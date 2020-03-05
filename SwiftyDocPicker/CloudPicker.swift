@@ -14,10 +14,10 @@ protocol CloudPickerDelegate: class {
 }
 class CloudPicker: NSObject {
     public enum SourceType: Int {
-        case filesA
-        case filesB
+        case files
         case folder
     }
+    // MARK: Class Document
     class Document: UIDocument {
         var data: Data?
         override func contents(forType typeName: String) throws -> Any {
@@ -29,14 +29,15 @@ class CloudPicker: NSObject {
             self.data = data
         }
     }
-
     private var pickerController: UIDocumentPickerViewController?
     private weak var presentationController: UIViewController?
-    var delegate: CloudPickerDelegate?
-    
+ 
     private var folderURL: URL?
     private var sourceType: SourceType!
     private var documents = [Document]()
+    
+    var delegate: CloudPickerDelegate?
+    var showHidden = false
     
     init(presentationController: UIViewController) {
         super.init()
@@ -70,11 +71,11 @@ class CloudPicker: NSObject {
             alertController.addAction(action)
         }
         let keys1 =  [kUTTypeText , kUTTypePlainText, kUTTypeUTF8PlainText, kUTTypeUTF8TabSeparatedText, kUTTypeUTF16PlainText, kUTTypeUTF16ExternalPlainText]
-        if let action = self.fileAction(for: .filesA, title: "Files text", keysOption: keys1) {
+        if let action = self.fileAction(for: .files, title: "Files text", keysOption: keys1) {
             alertController.addAction(action)
         }
         let keys2 = [kUTTypeArchive, kUTTypeZipArchive,kUTTypeGNUZipArchive]
-        if let action = self.fileAction(for: .filesA, title: "Files archive", keysOption: keys2) {
+        if let action = self.fileAction(for: .files, title: "Files archive", keysOption: keys2) {
             alertController.addAction(action)
         }
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -112,10 +113,13 @@ extension CloudPicker: UIDocumentPickerDelegate {
                     var isFound = false
                     
                     switch sourceType {
-                        case .filesA, .filesB :
+                        case .files :
                             let document = Document(fileURL: pickedURL)
                             for elem in documents {
-                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true    }
+                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true  }
+                                if elem.fileURL.lastPathComponent.hasPrefix(".") {
+                                    print("hidden:\(elem.fileURL.lastPathComponent)")
+                                }
                             }
                             if !isFound {
                               documents.append(document)
@@ -125,6 +129,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
+                                    //document.fileURL.is
                                     documents.append(document)
                                 }
                             }
@@ -137,7 +142,6 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
-    
 }
 
 extension CloudPicker: UINavigationControllerDelegate {}

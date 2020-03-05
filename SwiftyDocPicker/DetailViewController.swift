@@ -18,8 +18,9 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.text = textViewValue           // "To jest textview"
-        descriptionLabel.text = descriptionLabelValue       //"To jest label"
+        textView.text = textViewValue
+        descriptionLabel.text = descriptionLabelValue
+        
         // Do any additional setup after loading the view.
     }
     
