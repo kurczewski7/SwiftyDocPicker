@@ -29,12 +29,12 @@ class Setup {
                 break
             }
         }
-        let retVal: (encoding: String.Encoding, data: String)  = (encoding, data)
-        return retVal
+        //let retVal: (encoding: String.Encoding, data: String)  = (encoding, data)
+        return  (encoding, data) //retVal
     }
     class func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
         do {
-             let data = try String(contentsOf: path, encoding: encoding)
+            let data = try String(contentsOf: path, encoding: encoding)
             return (isOk: true, data: data)
         }
         catch {
