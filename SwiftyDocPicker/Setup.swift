@@ -7,9 +7,10 @@
 //
 
 import Foundation
+
 class Setup {
    class func getText(fromCloudFilePath filePath: URL) -> [String] {
-        var texts: [String] = ["brak"]
+        var texts: [String] = [""]
         let value = getTextEncoding(filePath: filePath)
         let data = value.data
         let myString = data.components(separatedBy: .newlines)
@@ -18,9 +19,8 @@ class Setup {
     }
     class func getTextEncoding(filePath path: URL) -> (encoding: String.Encoding, data: String) {
         let encodingType: [String.Encoding] = [.utf8,.windowsCP1250,.isoLatin2, .unicode, .ascii]
-        var data: String = ""
+        var data: String = "brakuje"
         var encoding: String.Encoding = .ascii
-        
         for i in 0..<encodingType.count {
             let value = tryEncodingFile(filePath: path, encoding: encodingType[i])
             if value.isOk {
@@ -29,8 +29,7 @@ class Setup {
                 break
             }
         }
-        //let retVal: (encoding: String.Encoding, data: String)  = (encoding, data)
-        return  (encoding, data) //retVal
+        return  (encoding, data)
     }
     class func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
         do {
