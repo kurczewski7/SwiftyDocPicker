@@ -37,23 +37,12 @@ class ViewController: UIViewController, CloudPickerDelegate {
         if let nextViewController = segue.destination as? DetailViewController {
             let document = documents[self.indexpath.row]            
             print("nextViewController:\(nextViewController)")
-            let textLines = Setup.getText(fromCloudFilePath: document.fileURL, encodingSystem: .utf8)
+            let textLines = Setup.getText(fromCloudFilePath: document.fileURL)
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
             nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + Setup.mergeText(forStrings: textLines)
             }
       }
     }
-//    func getCurrentItem(for collectionCell: UICollectionViewCell) -> Int {
-//        //let ii = collectionView.indexPath(for: UICollectionViewCell)
-//        if let indexPath = collectionView.indexPath(for: collectionCell) {
-//            // use indexPath to delete the cell
-//            return indexPath.row
-//        }
-//        else {
-//            return 0
-//        }
-//    }
-
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -69,17 +58,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         self.indexpath = indexPath
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         performSegue(withIdentifier: "showDetail", sender: cell)
-        
-//        if let cell = collectionView.cellForItem(at: indexPath) {
-//
-//        }
     }
-//    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//    if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-//    cellLabels[indexPath.row] as String
-//    cellImages[indexPath.row] as String
-//       }
-//    }
-    
 }
 
