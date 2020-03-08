@@ -129,7 +129,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
-                                    //document.fileURL.is
+                                    //if document.fileURL.is
                                     documents.append(document)
                                 }
                             }
@@ -142,6 +142,10 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
+    func isFileTypeUnhided(fileURL url: URL)  -> Bool {
+        return  !url.lastPathComponent.hasPrefix(".")
+    }
+    
 }
 
 extension CloudPicker: UINavigationControllerDelegate {}

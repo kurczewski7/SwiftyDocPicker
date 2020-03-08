@@ -38,8 +38,10 @@ class ViewController: UIViewController, CloudPickerDelegate {
             let document = documents[self.indexpath.row]            
             print("nextViewController:\(nextViewController)")
             let textLines = Setup.getText(fromCloudFilePath: document.fileURL)
+            print("textLines:\(textLines)")
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
-            nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + Setup.mergeText(forStrings: textLines)
+            let content = Setup.mergeText(forStrings: textLines)
+            nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + content
             }
       }
     }

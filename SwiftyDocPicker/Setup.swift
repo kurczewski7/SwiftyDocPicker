@@ -10,12 +10,14 @@ import Foundation
 
 class Setup {
    class func getText(fromCloudFilePath filePath: URL) -> [String] {
-        var texts: [String] = [""]
+
         let value = getTextEncoding(filePath: filePath)
         let data = value.data
         let myString = data.components(separatedBy: .newlines)
-        texts = myString
-        return texts
+        return myString
+    //var texts: [String] = [""]
+    //texts = myString
+    //texts
     }
     class func getTextEncoding(filePath path: URL) -> (encoding: String.Encoding, data: String) {
         let encodingType: [String.Encoding] = [.utf8,.windowsCP1250,.isoLatin2, .unicode, .ascii]
@@ -28,6 +30,9 @@ class Setup {
                 encoding = encodingType[i]
                 break
             }
+        }
+        if data == "brakuje" {
+            print("BRAKUJE: \(path)")
         }
         return  (encoding, data)
     }
