@@ -20,11 +20,15 @@ class ViewController: UIViewController, CloudPickerDelegate {
         self.documents =  []
         cloudPicker = CloudPicker(presentationController: self)
         cloudPicker.delegate = self
+        Setup.popUp(context: self, msg: "Your message")
     }
     func didPickDocuments(documents: [CloudPicker.Document]?) {
         self.documents = []
         documents?.forEach {
             self.documents.append($0)
+        }
+        self.documents.sort {
+            $0.fileURL.lastPathComponent < $1.fileURL.lastPathComponent
         }
         collectionView.reloadData()
     }
@@ -42,6 +46,9 @@ class ViewController: UIViewController, CloudPickerDelegate {
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
             let content = Setup.mergeText(forStrings: textLines)
             nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + content
+            Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
+            //Setup.displayToast(forController: self, message: "To jest wiadomość", seconds: 3)
+            Setup.popUp(context: self, msg: "Trzecia wiadomość")
             }
       }
     }

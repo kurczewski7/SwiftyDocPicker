@@ -44,6 +44,9 @@ class CloudPicker: NSObject {
         
         self.presentationController = presentationController
         print("INIT")
+//        documents.sort { ($0, $1) -> Bool in
+//            
+//        }
     }
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
@@ -110,27 +113,33 @@ extension CloudPicker: UIDocumentPickerDelegate {
                 do {
                     let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
                     let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
-                    var isFound = false
+//                    var isFound = false
                     
                     switch sourceType {
                         case .files :
                             let document = Document(fileURL: pickedURL)
-                            for elem in documents {
-                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true  }
-                                if elem.fileURL.lastPathComponent.hasPrefix(".") {
-                                    print("hidden:\(elem.fileURL.lastPathComponent)")
-                                }
-                            }
-                            if !isFound {
+                            if isFileUnhided(fileURL: pickedURL) {
                               documents.append(document)
                             }
+                           
+//                            for elem in documents {
+//                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true  }
+//                                if elem.fileURL.lastPathComponent.hasPrefix(".") {
+//                                    print("hidden:\(elem.fileURL.lastPathComponent)")
+//                                }
+//                            }
+//                            if !isFound {
+//                              documents.append(document)
+//                            }
 
                         case .folder:
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
-                                    //if document.fileURL.is
-                                    documents.append(document)
+                                    if isFileUnhided(fileURL: fileURL) {
+                                        documents.append(document)
+                                    }
+                                   // document.fileURL.is
                                 }
                             }
                     case .none:
@@ -142,8 +151,17 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
-    func isFileTypeUnhided(fileURL url: URL)  -> Bool {
-        return  !url.lastPathComponent.hasPrefix(".")
+    func isFileUnhided(fileURL url: URL)  -> Bool {
+        let name = url.lastPathComponent
+        if name.hasPrefix(".") {            return false        }
+        let values =  name.split(separator: ".")
+        if let number = Int(values[0]), number >= 0 {
+            return true
+        }
+        else {
+           print("użyj właściwy format pliku (np \"123.txt\")")
+           return false
+        }
     }
     
 }
