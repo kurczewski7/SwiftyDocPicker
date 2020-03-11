@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SSZipArchive
 
 class Setup {
    class func getText(fromCloudFilePath filePath: URL) -> [String] {
@@ -121,4 +122,5 @@ class Setup {
                 toast.removeFromSuperview()
         })
     }
+    //SSZipArchive.unzipFileAtPath(zipPath, toDestination: unzipPath)
 }
