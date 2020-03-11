@@ -35,6 +35,7 @@ class CloudPicker: NSObject {
     private var folderURL: URL?
     private var sourceType: SourceType!
     private var documents = [Document]()
+    var myTexts = [String]()
     
     var delegate: CloudPickerDelegate?
     var showHidden = false
@@ -90,12 +91,12 @@ class CloudPicker: NSObject {
         self.presentationController?.present(alertController, animated: true)
     }
     //--------------------------
-    class func getText(fromCloudFilePath filePath: URL) -> [String] {
+    func getText(fromCloudFilePath filePath: URL) -> [String] {
         let value = getTextEncoding(filePath: filePath)
         let myStrings = value.data.components(separatedBy: .newlines)
         return myStrings
     }
-    class private func getTextEncoding(filePath path: URL, defaultEncoding: String.Encoding = .windowsCP1250) -> (encoding: String.Encoding, data: String) {
+    private func getTextEncoding(filePath path: URL, defaultEncoding: String.Encoding = .windowsCP1250) -> (encoding: String.Encoding, data: String) {
         var data: String = "brakUJE"
         let val = tryEncodingFile(filePath: path, encoding: .windowsCP1250)
         if  val.isOk  {
@@ -109,7 +110,7 @@ class CloudPicker: NSObject {
         }
         return  (.windowsCP1250, data)
     }
-    class private func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
+    private func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
         do {
             let fff = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let data = try String(contentsOf: path, encoding: encoding)
@@ -121,7 +122,7 @@ class CloudPicker: NSObject {
             return (isOk: false, data: "Error:\(error)")
         }
     }
-    class private func findEncoding(filePath path: URL) -> (encoding: String.Encoding, data: String) {
+    private func findEncoding(filePath path: URL) -> (encoding: String.Encoding, data: String) {
         let encodingType: [String.Encoding] = [.utf8, .windowsCP1250, .isoLatin2, .unicode, .ascii]
         var data: String = "Nie znaleziono"
         var encoding: String.Encoding = .windowsCP1250
@@ -135,7 +136,7 @@ class CloudPicker: NSObject {
         }
         return  (encoding, data)
     }
-    class func mergeText(forStrings strings: [String]) -> String {
+    func mergeText(forStrings strings: [String]) -> String {
         var val = ""
             for elem in strings {     val += elem + "\n"        }
         return val
@@ -165,7 +166,6 @@ extension CloudPicker: UIDocumentPickerDelegate {
                 do {
                     let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
                     let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
-//                    var isFound = false
                     
                     switch sourceType {
                         case .files :
@@ -174,15 +174,6 @@ extension CloudPicker: UIDocumentPickerDelegate {
                               documents.append(document)
                             }
                            
-//                            for elem in documents {
-//                                if elem.fileURL.lastPathComponent == pickedURL.lastPathComponent {  isFound = true  }
-//                                if elem.fileURL.lastPathComponent.hasPrefix(".") {
-//                                    print("hidden:\(elem.fileURL.lastPathComponent)")
-//                                }
-//                            }
-//                            if !isFound {
-//                              documents.append(document)
-//                            }
 
                         case .folder:
                             for case let fileURL as URL in fileList! {
@@ -190,8 +181,11 @@ extension CloudPicker: UIDocumentPickerDelegate {
                                     let document = Document(fileURL: fileURL)
                                     if isFileUnhided(fileURL: fileURL) {
                                         documents.append(document)
+                                        let txts = getText(fromCloudFilePath: fileURL)
+                                        let txt = mergeText(forStrings: txts)
+                                        myTexts.append(txt)
                                     }
-                                   // document.fileURL.is
+                                  
                                 }
                             }
                     case .none:

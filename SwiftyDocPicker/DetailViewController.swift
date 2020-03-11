@@ -24,8 +24,9 @@ class DetailViewController: UIViewController {
         print("self.indexpathValue 3:\(self.indexpathValue)")
         if let url = urlValue {
             Setup.popUp(context: self, msg: url.absoluteString)
-            let textLines = CloudPicker.getText(fromCloudFilePath: url)
-            let content = CloudPicker.mergeText(forStrings: textLines)
+            // let textLines = "AAA"
+            // getText(fromCloudFilePath: url)
+            let content = textViewValue  //CloudPicker.mergeText(forStrings: textLines)
             textView.text = url.absoluteString + "\n" + content
         }
         else {

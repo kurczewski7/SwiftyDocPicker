@@ -59,7 +59,7 @@ class ViewController: UIViewController, CloudPickerDelegate {
             print("fileURL: \(document.fileURL)")
             //let content = cloudPicker.mergeText(forStrings: textLines)
             //print("content:\(content)")
-            nextViewController.textViewValue = "??\n"  + "\n:" + document.fileURL.absoluteString
+            nextViewController.textViewValue = "\(cloudPicker.myTexts[self.indexpath.row])\n"  + "\n:" + document.fileURL.absoluteString
             Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
             //Setup.displayToast(forController: self, message: "To jest wiadomość", seconds: 3)
             Setup.popUp(context: self, msg: "Trzecia wiadomość")
