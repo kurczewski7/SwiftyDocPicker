@@ -123,4 +123,13 @@ class Setup {
         })
     }
     //SSZipArchive.unzipFileAtPath(zipPath, toDestination: unzipPath)
+    
+//    let sourcePath = sourceURL.absoluteString
+//    let destPath = destURL.absoluteString
+//
+//    print("Source: \(sourcePath)")
+//    print("Dest: \(destPath)")
+//
+//    let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
+//    print("ZipArchive - Success: \(success)")
 }
