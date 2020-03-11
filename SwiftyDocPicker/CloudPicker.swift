@@ -45,7 +45,7 @@ class CloudPicker: NSObject {
         self.presentationController = presentationController
         print("INIT")
 //        documents.sort { ($0, $1) -> Bool in
-//            
+//
 //        }
     }
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
@@ -89,6 +89,58 @@ class CloudPicker: NSObject {
         }
         self.presentationController?.present(alertController, animated: true)
     }
+    //--------------------------
+    class func getText(fromCloudFilePath filePath: URL) -> [String] {
+        let value = getTextEncoding(filePath: filePath)
+        let myStrings = value.data.components(separatedBy: .newlines)
+        return myStrings
+    }
+    class private func getTextEncoding(filePath path: URL, defaultEncoding: String.Encoding = .windowsCP1250) -> (encoding: String.Encoding, data: String) {
+        var data: String = "brakUJE"
+        let val = tryEncodingFile(filePath: path, encoding: .windowsCP1250)
+        if  val.isOk  {
+            data = val.data
+        }
+        else {
+            data = val.data
+        }
+        if data == "brakUJE" {
+            print("BRAKUJE: \(path)")
+        }
+        return  (.windowsCP1250, data)
+    }
+    class private func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
+        do {
+            let fff = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let data = try String(contentsOf: path, encoding: encoding)
+            print("DATA!!,encoding\(encoding):\(data)")
+            return (isOk: true, data: data)
+        }
+        catch let error {
+            print("NIE ZDEKODOWANO STRINGA:\(encoding),error:\(error)")
+            return (isOk: false, data: "Error:\(error)")
+        }
+    }
+    class private func findEncoding(filePath path: URL) -> (encoding: String.Encoding, data: String) {
+        let encodingType: [String.Encoding] = [.utf8, .windowsCP1250, .isoLatin2, .unicode, .ascii]
+        var data: String = "Nie znaleziono"
+        var encoding: String.Encoding = .windowsCP1250
+        for i in 0..<encodingType.count {
+            let value = tryEncodingFile(filePath: path, encoding: encodingType[i])
+            if value.isOk {
+                data = value.data
+                encoding = encodingType[i]
+                break
+            }
+        }
+        return  (encoding, data)
+    }
+    class func mergeText(forStrings strings: [String]) -> String {
+        var val = ""
+            for elem in strings {     val += elem + "\n"        }
+        return val
+    }
+    //-----------------------
     deinit {
         print("DEINIT")
     }
@@ -172,3 +224,20 @@ extension URL {
         return (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
     }
 }
+
+    //----
+    //private static let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+//    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate)
+//        {
+//            let destFolder = "/Folder_Name"
+//            let destPath = documentsURL.appendingPathComponent(destFolder, isDirectory: true)
+//            let destString = destPath.absoluteString
+//
+//            if ( !FileManager.default.fileExists(atPath: destString) )
+//            {
+//                try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
+//            }
+//
+//            SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+//        }

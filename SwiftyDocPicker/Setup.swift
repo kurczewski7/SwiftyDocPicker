@@ -10,57 +10,56 @@ import UIKit
 import SSZipArchive
 
 class Setup {
-   class func getText(fromCloudFilePath filePath: URL) -> [String] {
-
-        let value = getTextEncoding(filePath: filePath)
-        let data = value.data
-        let myString = data.components(separatedBy: .newlines)
-        return myString
-    //var texts: [String] = [""]
-    //texts = myString
-    //texts
-    }
-    class func getTextEncoding(filePath path: URL, defaultEncoding: String.Encoding = .windowsCP1250) -> (encoding: String.Encoding, data: String) {
-        let encodingType: [String.Encoding] = [.utf8,.windowsCP1250,.isoLatin2, .unicode, .ascii]
-        var data: String = "brakUJE"
-        var encoding: String.Encoding = .windowsCP1250
-        let val = tryEncodingFile(filePath: path, encoding: defaultEncoding)
-        if  val.data.count > 0 {
-            data = val.data
-        }
-        else {  // find encoding
-            for i in 0..<encodingType.count {
-                let value = tryEncodingFile(filePath: path, encoding: encodingType[i])
-                if value.isOk {
-                    data = value.data
-                    encoding = encodingType[i]
-                    break
-                }
-            }
-        }
-        if data == "brakUJE" {
-            print("BRAKUJE: \(path)")
-        }
-        return  (encoding, data)
-    }
-    class func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
-        do {
-            let data = try String(contentsOf: path, encoding: encoding)
-            print("DATA!!,encoding\(encoding):\(data)")
-            return (isOk: true, data: data)
-        }
-        catch {
-            return (isOk: false, data: "")
-        }
-    }
-    class func mergeText(forStrings strings: [String]) -> String {
-        var val = ""
-        for elem in strings {
-            //defer {    print("val:\(val)")   }
-            val += elem + "\n"
-        }
-        return val
-    }
+//   class func getText(fromCloudFilePath filePath: URL) -> [String] {
+//        let value = getTextEncoding(filePath: filePath)
+//        let data = value.data
+//        let myString = data.components(separatedBy: .newlines)
+//        return myString
+//    //var texts: [String] = [""]
+//    //texts = myString
+//    //texts
+//    }
+//    class func getTextEncoding(filePath path: URL, defaultEncoding: String.Encoding = .windowsCP1250) -> (encoding: String.Encoding, data: String) {
+//        let encodingType: [String.Encoding] = [.utf8,.windowsCP1250,.isoLatin2, .unicode, .ascii]
+//        var data: String = "brakUJE"
+//        var encoding: String.Encoding = .windowsCP1250
+//        let val = tryEncodingFile(filePath: path, encoding: defaultEncoding)
+//        if  val.data.count > 0 {
+//            data = val.data
+//        }
+//        else {  // find encoding
+//            for i in 0..<encodingType.count {
+//                let value = tryEncodingFile(filePath: path, encoding: encodingType[i])
+//                if value.isOk {
+//                    data = value.data
+//                    encoding = encodingType[i]
+//                    break
+//                }
+//            }
+//        }
+//        if data == "brakUJE" {
+//            print("BRAKUJE: \(path)")
+//        }
+//        return  (encoding, data)
+//    }
+//    class func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
+//        do {
+//            let data = try String(contentsOf: path, encoding: encoding)
+//            print("DATA!!,encoding\(encoding):\(data)")
+//            return (isOk: true, data: data)
+//        }
+//        catch {
+//            return (isOk: false, data: "")
+//        }
+//    }
+//    class func mergeText(forStrings strings: [String]) -> String {
+//        var val = ""
+//        for elem in strings {
+//            //defer {    print("val:\(val)")   }
+//            val += elem + "\n"
+//        }
+//        return val
+//    }
     class func findValue<T: Comparable>(currentList: [T], valueToFind: T, handler: (_ currElem: T) -> Bool) -> Bool {
         var found = false
         // TODO: Finalize method
@@ -115,21 +114,28 @@ class Setup {
 
         ctx.view.addSubview(toast)
 
-        UIView.animate(withDuration: 5.0, delay: 0.2,
+        UIView.animate(withDuration: 15.0, delay: 0.2,
             options: .curveEaseOut, animations: {
             toast.alpha = 0.0
             }, completion: {(isCompleted) in
                 toast.removeFromSuperview()
         })
     }
-    //SSZipArchive.unzipFileAtPath(zipPath, toDestination: unzipPath)
     
-//    let sourcePath = sourceURL.absoluteString
-//    let destPath = destURL.absoluteString
+    //----
+    //private static let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+//    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate)
+//        {
+//            let destFolder = "/Folder_Name"
+//            let destPath = documentsURL.appendingPathComponent(destFolder, isDirectory: true)
+//            let destString = destPath.absoluteString
 //
-//    print("Source: \(sourcePath)")
-//    print("Dest: \(destPath)")
+//            if ( !FileManager.default.fileExists(atPath: destString) )
+//            {
+//                try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
+//            }
 //
-//    let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
-//    print("ZipArchive - Success: \(success)")
+//            SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+//        }
 }

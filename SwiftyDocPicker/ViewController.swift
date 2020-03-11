@@ -7,6 +7,14 @@
 //
 
 import UIKit
+//import SSZipArchive
+//import "SSZipArchive”
+//#import "SSZipArchive.h"
+
+//    import ZipArchive
+    //import SSZipArchive
+
+
 
 class ViewController: UIViewController, CloudPickerDelegate {
     var cloudPicker: CloudPicker!
@@ -21,6 +29,7 @@ class ViewController: UIViewController, CloudPickerDelegate {
         cloudPicker = CloudPicker(presentationController: self)
         cloudPicker.delegate = self
         Setup.popUp(context: self, msg: "Your message")
+        //SSZip
     }
     func didPickDocuments(documents: [CloudPicker.Document]?) {
         self.documents = []
@@ -39,17 +48,24 @@ class ViewController: UIViewController, CloudPickerDelegate {
         print("segue: \(String(describing: segue.identifier))")
         if segue.identifier == "showDetail" {
         if let nextViewController = segue.destination as? DetailViewController {
-            let document = documents[self.indexpath.row]            
+            let document = documents[self.indexpath.row]
+            
+            
+            //let textLines = cloudPicker.getText(fromCloudFilePath: document.fileURL)
             print("nextViewController:\(nextViewController)")
-            let textLines = Setup.getText(fromCloudFilePath: document.fileURL)
-            print("textLines:\(textLines)")
+            //print("textLines:\(textLines)")
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
-            let content = Setup.mergeText(forStrings: textLines)
-            nextViewController.textViewValue = document.fileURL.absoluteString + "\n" + content
+            nextViewController.urlValue = document.fileURL
+            print("fileURL: \(document.fileURL)")
+            //let content = cloudPicker.mergeText(forStrings: textLines)
+            //print("content:\(content)")
+            nextViewController.textViewValue = "??\n"  + "\n:" + document.fileURL.absoluteString
             Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
             //Setup.displayToast(forController: self, message: "To jest wiadomość", seconds: 3)
             Setup.popUp(context: self, msg: "Trzecia wiadomość")
-            }
+            print("self.indexpath 2:\(self.indexpath)")
+            nextViewController.indexpathValue = self.indexpath
+        }
       }
     }
 }
@@ -65,8 +81,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexpath = indexPath
+        print("self.indexpath 1:\(self.indexpath)")
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         performSegue(withIdentifier: "showDetail", sender: cell)
     }
 }
+
 
