@@ -11,7 +11,6 @@ import UIKit
 class DetailViewController: UIViewController {
     var textViewValue = ""
     var descriptionLabelValue = ""
-    var urlValue: URL?
     var indexpathValue = IndexPath(item: 0, section: 0)
     
     @IBOutlet weak var textView: UITextView!
@@ -22,18 +21,7 @@ class DetailViewController: UIViewController {
         textView.text = textViewValue
         descriptionLabel.text = descriptionLabelValue
         print("self.indexpathValue 3:\(self.indexpathValue)")
-        if let url = urlValue {
-            Setup.popUp(context: self, msg: url.absoluteString)
-            // let textLines = "AAA"
-            // getText(fromCloudFilePath: url)
-            let content = textViewValue  //CloudPicker.mergeText(forStrings: textLines)
-            textView.text = url.absoluteString + "\n" + content
-        }
-        else {
-           Setup.popUp(context: self, msg: "Pusty url")
-        }
-        
-        // Do any additional setup after loading the view.
+        textView.text =  textViewValue
     }
     
 

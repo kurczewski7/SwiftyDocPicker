@@ -12,7 +12,7 @@ import MobileCoreServices
 protocol CloudPickerDelegate: class {
     func didPickDocuments(documents: [CloudPicker.Document]?)
 }
-class CloudPicker: NSObject {
+class CloudPicker: NSObject, UINavigationControllerDelegate {
     public enum SourceType: Int {
         case files
         case folder
@@ -51,6 +51,7 @@ class CloudPicker: NSObject {
     }
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
+            self.cleadData()
             self.pickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
             self.pickerController!.delegate = self
             self.sourceType = type
@@ -60,6 +61,7 @@ class CloudPicker: NSObject {
     }
     public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString]) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
+            self.cleadData()
             self.pickerController = UIDocumentPickerViewController(documentTypes: keys as [String], in: .open)
             self.pickerController!.delegate = self
             self.pickerController!.allowsMultipleSelection = true
@@ -112,9 +114,9 @@ class CloudPicker: NSObject {
     }
     private func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
         do {
-            let fff = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            //let fff = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let data = try String(contentsOf: path, encoding: encoding)
-            print("DATA!!,encoding\(encoding):\(data)")
+            //print("DATA!!,encoding\(encoding):\(data)")
             return (isOk: true, data: data)
         }
         catch let error {
@@ -141,6 +143,10 @@ class CloudPicker: NSObject {
             for elem in strings {     val += elem + "\n"        }
         return val
     }
+    func cleadData() {
+        documents.removeAll()
+        myTexts.removeAll()
+    }
     //-----------------------
     deinit {
         print("DEINIT")
@@ -164,13 +170,14 @@ extension CloudPicker: UIDocumentPickerDelegate {
         }
         NSFileCoordinator().coordinate(readingItemAt: pickedURL, error: NSErrorPointer.none) { (folderURL) in
                 do {
-                    let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
+                    let keys: [URLResourceKey] = [.nameKey, .isRegularFileKey] //isDirectoryKey
                     let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
-                    
+                    print("Folder_URL:\(folderURL.absoluteString)")
+          
                     switch sourceType {
                         case .files :
                             let document = Document(fileURL: pickedURL)
-                            if isFileUnhided(fileURL: pickedURL) {
+                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL) {
                               documents.append(document)
                             }
                            
@@ -179,10 +186,11 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
-                                    if isFileUnhided(fileURL: fileURL) {
+                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL) {
                                         documents.append(document)
                                         let txts = getText(fromCloudFilePath: fileURL)
                                         let txt = mergeText(forStrings: txts)
+                                        print("File_URL:\(fileURL.absoluteString)")
                                         myTexts.append(txt)
                                     }
                                   
@@ -197,12 +205,16 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
-    func isFileUnhided(fileURL url: URL)  -> Bool {
+    func isFileUnhided(fileURL url: URL, folderURL: URL)  -> Bool {
         let name = url.lastPathComponent
         if name.hasPrefix(".") {            return false        }
         let values =  name.split(separator: ".")
         if let number = Int(values[0]), number >= 0 {
-            return true
+            if folderURL ==  url.deletingLastPathComponent()  {
+                return true
+            } else {
+                return false
+            }
         }
         else {
            print("użyj właściwy format pliku (np \"123.txt\")")
@@ -212,7 +224,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
     
 }
 
-extension CloudPicker: UINavigationControllerDelegate {}
+//extension CloudPicker:  {}
 extension URL {
     var isDirectory: Bool! {
         return (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
