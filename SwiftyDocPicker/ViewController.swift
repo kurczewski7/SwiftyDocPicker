@@ -49,19 +49,12 @@ class ViewController: UIViewController, CloudPickerDelegate {
         if segue.identifier == "showDetail" {
         if let nextViewController = segue.destination as? DetailViewController {
             let document = documents[self.indexpath.row]
-            
-            
-            //let textLines = cloudPicker.getText(fromCloudFilePath: document.fileURL)
-            print("nextViewController:\(nextViewController)")
-            //print("textLines:\(textLines)")
+            print("nextViewController:\(nextViewController)")           
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
             nextViewController.urlValue = document.fileURL
             print("fileURL: \(document.fileURL)")
-            //let content = cloudPicker.mergeText(forStrings: textLines)
-            //print("content:\(content)")
             nextViewController.textViewValue = "\(cloudPicker.myTexts[self.indexpath.row])\n"  + "\n:" + document.fileURL.absoluteString
             Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
-            //Setup.displayToast(forController: self, message: "To jest wiadomość", seconds: 3)
             Setup.popUp(context: self, msg: "Trzecia wiadomość")
             print("self.indexpath 2:\(self.indexpath)")
             nextViewController.indexpathValue = self.indexpath
