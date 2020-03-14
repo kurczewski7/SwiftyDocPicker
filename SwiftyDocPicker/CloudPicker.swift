@@ -170,14 +170,15 @@ extension CloudPicker: UIDocumentPickerDelegate {
         }
         NSFileCoordinator().coordinate(readingItemAt: pickedURL, error: NSErrorPointer.none) { (folderURL) in
                 do {
-                    let keys: [URLResourceKey] = [.nameKey, .isRegularFileKey] //isDirectoryKey
+                    let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey] //isDirectoryKey isRegularFileKey
                     let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
                     print("Folder_URL:\(folderURL.absoluteString)")
           
                     switch sourceType {
                         case .files :
                             let document = Document(fileURL: pickedURL)
-                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL) {
+                            print("One_File_URL:\(pickedURL.absoluteString)")
+                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, isFileMode: true) {
                               documents.append(document)
                             }
                            
@@ -186,7 +187,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
-                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL) {
+                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, isFileMode: false) {
                                         documents.append(document)
                                         let txts = getText(fromCloudFilePath: fileURL)
                                         let txt = mergeText(forStrings: txts)
@@ -205,16 +206,17 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
-    func isFileUnhided(fileURL url: URL, folderURL: URL)  -> Bool {
+    func isFileUnhided(fileURL url: URL, folderURL: URL, isFileMode: Bool)  -> Bool {
         let name = url.lastPathComponent
         if name.hasPrefix(".") {            return false        }
         let values =  name.split(separator: ".")
         if let number = Int(values[0]), number >= 0 {
-            if folderURL ==  url.deletingLastPathComponent()  {
-                return true
-            } else {
-                return false
-            }
+//            if folderURL ==  url.deletingLastPathComponent() && true  {
+//                return true
+//            } else {
+//                return false
+//            }
+            return true
         }
         else {
            print("użyj właściwy format pliku (np \"123.txt\")")
