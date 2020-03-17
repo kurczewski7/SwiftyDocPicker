@@ -17,6 +17,12 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
         case files
         case folder
     }
+    public enum SourceTypeData {
+        case filesTxt
+        case filesZip
+        case folder
+     }
+
     // MARK: Class Document
     class Document: UIDocument {
         var data: Data?
@@ -178,7 +184,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                         case .files :
                             let document = Document(fileURL: pickedURL)
                             print("One_File_URL:\(pickedURL.absoluteString)")
-                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, isFileMode: true) {
+                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, sourceTypeData: .filesTxt) {
                               documents.append(document)
                             }
                            
@@ -187,7 +193,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
                                     let document = Document(fileURL: fileURL)
-                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, isFileMode: false) {
+                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceTypeData: .folder) {
                                         documents.append(document)
                                         let txts = getText(fromCloudFilePath: fileURL)
                                         let txt = mergeText(forStrings: txts)
@@ -206,24 +212,49 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
-    func isFileUnhided(fileURL url: URL, folderURL: URL, isFileMode: Bool)  -> Bool {
+    func isFileUnhided(fileURL url: URL, folderURL: URL, sourceTypeData: SourceTypeData)  -> Bool {
+        
+        //var retVal = false
         let name = url.lastPathComponent
-        if name.hasPrefix(".") {            return false        }
-        let values =  name.split(separator: ".")
-        if let number = Int(values[0]), number >= 0 {
-//            if folderURL ==  url.deletingLastPathComponent() && true  {
-//                return true
-//            } else {
-//                return false
-//            }
-            return true
+         print("isFileUnhided przed")
+        if name.hasPrefix(".")                           {   return false   }
+        if sourceTypeData == .folder && folderURL !=  url.deletingLastPathComponent() {
+            return false
         }
-        else {
-           print("użyj właściwy format pliku (np \"123.txt\")")
-           return false
+        print("isFileUnhided po")
+
+        let values =  name.split(separator: ".")
+        switch sourceTypeData {
+            case .filesTxt:
+                print("Txt")
+                return isTextDataOk(values: values)
+            
+            case .filesZip:
+                print("Zip")
+                if  values[values.count-1].uppercased() == "ZIP"   {
+                     return true
+                 }
+                 else {
+                     return false
+                 }
+
+            case .folder:
+                print("folder")
+                return isTextDataOk(values: values)
         }
     }
-    
+
+        
+        func isTextDataOk(values: [Substring])  -> Bool{
+            if let number = Int(values[0]), number >= 0 {
+                 return true
+             }
+             else {
+                 return false
+             }
+        
+        
+    }
 }
 
 //extension CloudPicker:  {}

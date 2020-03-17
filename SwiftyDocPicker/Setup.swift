@@ -45,7 +45,8 @@ class Setup {
 //    class func tryEncodingFile(filePath path: URL, encoding: String.Encoding)  -> (isOk: Bool, data: String) {
 //        do {
 //            let data = try String(contentsOf: path, encoding: encoding)
-//            print("DATA!!,encoding\(encoding):\(data)")
+//            print("enum <#name#> {
+
 //            return (isOk: true, data: data)
 //        }
 //        catch {
@@ -60,6 +61,10 @@ class Setup {
 //        }
 //        return val
 //    }
+    
+    
+ 
+    
     class func findValue<T: Comparable>(currentList: [T], valueToFind: T, handler: (_ currElem: T) -> Bool) -> Bool {
         var found = false
         // TODO: Finalize method
