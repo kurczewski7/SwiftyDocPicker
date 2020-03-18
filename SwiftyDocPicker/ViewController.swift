@@ -32,6 +32,7 @@ class ViewController: UIViewController, CloudPickerDelegate {
         //SSZip
     }
     func didPickDocuments(documents: [CloudPicker.Document]?) {
+        //self.documents = []  //
         self.documents = []
         documents?.forEach {
             self.documents.append($0)
@@ -41,16 +42,27 @@ class ViewController: UIViewController, CloudPickerDelegate {
         }
         collectionView.reloadData()
     }
-    @IBAction func pickPressed(_ sender: Any) {
+    @IBAction func pickPressed(_ sender: UIBarButtonItem) {
         cloudPicker.present(from: view)
     }
+    
+    @IBAction func trashPressed(_ sender: UIBarButtonItem) {
+        cloudPicker.cleadData()
+        documents.removeAll()
+        collectionView.reloadData()
+    }
+    
+    @IBAction func savePressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segue: \(String(describing: segue.identifier))")
         if segue.identifier == "showDetail" {
         if let nextViewController = segue.destination as? DetailViewController {
             let document = documents[self.indexpath.row]
             nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
-            nextViewController.textViewValue = "\(cloudPicker.myTexts[self.indexpath.row])\n"  + "\n:" + document.fileURL.absoluteString
+            nextViewController.textViewValue = "\(document.myTexts)\n"  + "\n:" + document.fileURL.absoluteString  //[self.indexpath.row
             nextViewController.indexpathValue = self.indexpath
             
             

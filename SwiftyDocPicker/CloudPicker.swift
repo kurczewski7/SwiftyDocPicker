@@ -26,6 +26,8 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     // MARK: Class Document
     class Document: UIDocument {
         var data: Data?
+        var myTexts = ""
+        
         override func contents(forType typeName: String) throws -> Any {
             guard let data = data else { return Data() }
             return try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: true)
@@ -41,7 +43,8 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     private var folderURL: URL?
     private var sourceType: SourceType!
     private var documents = [Document]()
-    var myTexts = [String]()
+    private var lastSourceTypeData: SourceTypeData = .folder
+    //var myTexts2 = [String]()
     
     var delegate: CloudPickerDelegate?
     var showHidden = false
@@ -58,6 +61,7 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
             self.cleadData()
+            self.lastSourceTypeData = .folder
             self.pickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
             self.pickerController!.delegate = self
             self.sourceType = type
@@ -65,9 +69,10 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
         }
         return action
     }
-    public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString]) -> UIAlertAction? {
+    public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString], sourceTypeData: SourceTypeData) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
             self.cleadData()
+            self.lastSourceTypeData = sourceTypeData
             self.pickerController = UIDocumentPickerViewController(documentTypes: keys as [String], in: .open)
             self.pickerController!.delegate = self
             self.pickerController!.allowsMultipleSelection = true
@@ -83,13 +88,14 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
             alertController.addAction(action)
         }
         let keys1 =  [kUTTypeText , kUTTypePlainText, kUTTypeUTF8PlainText, kUTTypeUTF8TabSeparatedText, kUTTypeUTF16PlainText, kUTTypeUTF16ExternalPlainText]
-        if let action = self.fileAction(for: .files, title: "Files text", keysOption: keys1) {
+        if let action = self.fileAction(for: .files, title: "Files text", keysOption: keys1, sourceTypeData: .filesTxt) {
             alertController.addAction(action)
         }
         let keys2 = [kUTTypeArchive, kUTTypeZipArchive,kUTTypeGNUZipArchive]
-        if let action = self.fileAction(for: .files, title: "Files archive", keysOption: keys2) {
+        if let action = self.fileAction(for: .files, title: "Files archive", keysOption: keys2, sourceTypeData: .filesZip) {
             alertController.addAction(action)
         }
+        
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView
@@ -150,8 +156,10 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
         return val
     }
     func cleadData() {
-        documents.removeAll()
-        myTexts.removeAll()
+       // if self.lastSourceTypeData == .folder  ||  self.lastSourceTypeData == .filesZip {
+            documents.removeAll()
+       // }
+        
     }
     //-----------------------
     deinit {
@@ -182,25 +190,25 @@ extension CloudPicker: UIDocumentPickerDelegate {
           
                     switch sourceType {
                         case .files :
-                            let document = Document(fileURL: pickedURL)
+//                            cleadData()
+//                            lastSourceTypeData = .filesTxt
+                            var document = Document(fileURL: pickedURL)
                             print("One_File_URL:\(pickedURL.absoluteString)")
                             if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, sourceTypeData: .filesTxt) {
-                              documents.append(document)
-                            }
-                           
+                                fillDocument(forUrl: pickedURL, document: &document)
+                                documents.append(document)
+                            }                           
 
                         case .folder:
                             for case let fileURL as URL in fileList! {
                                 if !fileURL.isDirectory {
-                                    let document = Document(fileURL: fileURL)
-                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceTypeData: .folder) {
+                                    var document = Document(fileURL: fileURL)
+                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceTypeData: .folder) {                                        
+                                        fillDocument(forUrl: fileURL, document: &document)
                                         documents.append(document)
-                                        let txts = getText(fromCloudFilePath: fileURL)
-                                        let txt = mergeText(forStrings: txts)
                                         print("File_URL:\(fileURL.absoluteString)")
-                                        myTexts.append(txt)
+
                                     }
-                                  
                                 }
                             }
                     case .none:
@@ -212,6 +220,13 @@ extension CloudPicker: UIDocumentPickerDelegate {
 //                }
         }
     }
+    func fillDocument(forUrl url: URL, document: inout Document) {
+        let txts = getText(fromCloudFilePath: url)
+        let txt = mergeText(forStrings: txts)
+        document.myTexts = txt
+        //  documents.append(document)
+    }
+    
     func isFileUnhided(fileURL url: URL, folderURL: URL, sourceTypeData: SourceTypeData)  -> Bool {
         
         //var retVal = false

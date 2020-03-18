@@ -62,11 +62,23 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Dokumenty" largeTitleDisplayMode="never" id="bjU-Zg-Bie">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="M9Z-w0-xgQ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="FwN-EA-Z4r">
                             <connections>
-                                <action selector="pickPressed:" destination="BYZ-38-t0r" id="f8C-tf-diJ"/>
+                                <action selector="savePressed:" destination="BYZ-38-t0r" id="brp-50-ZQK"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="M9Z-w0-xgQ">
+                                <connections>
+                                    <action selector="pickPressed:" destination="BYZ-38-t0r" id="f8C-tf-diJ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="trash" id="P4T-8T-SKl">
+                                <connections>
+                                    <action selector="trashPressed:" destination="BYZ-38-t0r" id="25d-VW-3In"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="xOe-a3-XHb" id="rQC-40-kd8"/>
