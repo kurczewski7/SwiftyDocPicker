@@ -59,28 +59,18 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
             self.cleadData()
             self.pickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
             self.pickerController!.delegate = self
-            
             self.sourceType = type
-            //self.lastSourceTypeData = .folder
-            
             self.presentationController?.present(self.pickerController!, animated: true)
         }
         return action
     }
     public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString]) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
-            //self.cleadData()
-            if self.sourceType == .folder  || self.sourceType == .filesZip {
-                self.cleadData()
-            }
-           
+            if self.sourceType == .folder  || self.sourceType == .filesZip {                self.cleadData()            }
             self.pickerController = UIDocumentPickerViewController(documentTypes: keys as [String], in: .open)
             self.pickerController!.delegate = self
             self.pickerController!.allowsMultipleSelection = true
-            
             self.sourceType = type
-            //self.lastSourceTypeData = type
-            
             self.presentationController?.present(self.pickerController!, animated: true)
         }
         return  action
@@ -160,10 +150,7 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
         return val
     }
     func cleadData() {
-        //if self.sourceType == .folder  ||  self.sourceType == .filesZip {
             documents.removeAll()
-        //}
-        
     }
     //-----------------------
     deinit {
@@ -214,7 +201,13 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             }
                        
                         case .filesZip:
+                            var document = Document(fileURL: pickedURL)
                             print("Opcjia filesZip")
+                            if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, sourceType: .filesZip) {
+                               //fillDocument(forUrl: pickedURL, document: &document)
+                               documents.append(document)
+                            }
+                    
                         
                     }
                  }

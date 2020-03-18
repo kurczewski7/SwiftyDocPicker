@@ -29,10 +29,8 @@ class ViewController: UIViewController, CloudPickerDelegate {
         cloudPicker = CloudPicker(presentationController: self)
         cloudPicker.delegate = self
         Setup.popUp(context: self, msg: "Your message")
-        //SSZip
     }
     func didPickDocuments(documents: [CloudPicker.Document]?) {
-        //self.documents = []  //
         self.documents = []
         documents?.forEach {
             self.documents.append($0)
