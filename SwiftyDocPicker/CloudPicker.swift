@@ -14,17 +14,10 @@ protocol CloudPickerDelegate: class {
 }
 class CloudPicker: NSObject, UINavigationControllerDelegate {
     public enum SourceType: Int {
-//        case files
-//        case folder
         case filesTxt
         case filesZip
         case folder
     }
-//    public enum SourceTypeData {
-//        case filesTxt
-//        case filesZip
-//        case folder
-//     }
 
     // MARK: Class Document
     class Document: UIDocument {
@@ -44,9 +37,9 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     private weak var presentationController: UIViewController?
  
     private var folderURL: URL?
-    private var sourceType: SourceType!
+    private var sourceType: SourceType = .folder
     private var documents = [Document]()
-    private var lastSourceTypeData: SourceType = .folder
+    //private var lastSourceTypeData: SourceType = .folder
     //var myTexts2 = [String]()
     
     var delegate: CloudPickerDelegate?
@@ -64,22 +57,30 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     public func folderAction(for type: SourceType, title: String) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
             self.cleadData()
-            self.lastSourceTypeData = .folder
             self.pickerController = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
             self.pickerController!.delegate = self
+            
             self.sourceType = type
+            //self.lastSourceTypeData = .folder
+            
             self.presentationController?.present(self.pickerController!, animated: true)
         }
         return action
     }
     public func fileAction(for type: SourceType, title: String, keysOption keys: [CFString]) -> UIAlertAction? {
          let action = UIAlertAction(title: title, style: .default) { [unowned self] _ in
-            self.cleadData()
-            self.lastSourceTypeData = type
+            //self.cleadData()
+            if self.sourceType == .folder  || self.sourceType == .filesZip {
+                self.cleadData()
+            }
+           
             self.pickerController = UIDocumentPickerViewController(documentTypes: keys as [String], in: .open)
             self.pickerController!.delegate = self
             self.pickerController!.allowsMultipleSelection = true
+            
             self.sourceType = type
+            //self.lastSourceTypeData = type
+            
             self.presentationController?.present(self.pickerController!, animated: true)
         }
         return  action
@@ -159,9 +160,9 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
         return val
     }
     func cleadData() {
-       // if self.lastSourceTypeData == .folder  ||  self.lastSourceTypeData == .filesZip {
+        //if self.sourceType == .folder  ||  self.sourceType == .filesZip {
             documents.removeAll()
-       // }
+        //}
         
     }
     //-----------------------
@@ -192,6 +193,18 @@ extension CloudPicker: UIDocumentPickerDelegate {
                     print("Folder_URL:\(folderURL.absoluteString)")
           
                     switch sourceType {
+                        case .folder:
+                        for case let fileURL as URL in fileList! {
+                            if !fileURL.isDirectory {
+                                var document = Document(fileURL: fileURL)
+                                if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceType: .folder) {
+                                    fillDocument(forUrl: fileURL, document: &document)
+                                    documents.append(document)
+                                    print("File_URL:\(fileURL.absoluteString)")
+                                }
+                            }
+                        }
+                    
                         case .filesTxt:
                             var document = Document(fileURL: pickedURL)
                             print("One_File_URL:\(pickedURL.absoluteString)")
@@ -199,24 +212,10 @@ extension CloudPicker: UIDocumentPickerDelegate {
                                 fillDocument(forUrl: pickedURL, document: &document)
                                 documents.append(document)
                             }
-
-                        case .folder:
-                            for case let fileURL as URL in fileList! {
-                                if !fileURL.isDirectory {
-                                    var document = Document(fileURL: fileURL)
-                                    if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceType: .folder) {
-                                        fillDocument(forUrl: fileURL, document: &document)
-                                        documents.append(document)
-                                        print("File_URL:\(fileURL.absoluteString)")
-
-                                    }
-                                }
-                            }
-                        
+                       
                         case .filesZip:
                             print("Opcjia filesZip")
-                        case .none:
-                            break
+                        
                     }
                  }
 //                catch let error {
@@ -228,7 +227,6 @@ extension CloudPicker: UIDocumentPickerDelegate {
         let txts = getText(fromCloudFilePath: url)
         let txt = mergeText(forStrings: txts)
         document.myTexts = txt
-        //  documents.append(document)
     }
     
     func isFileUnhided(fileURL url: URL, folderURL: URL, sourceType: SourceType)  -> Bool {
