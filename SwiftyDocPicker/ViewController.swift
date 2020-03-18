@@ -57,22 +57,24 @@ class ViewController: UIViewController, CloudPickerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segue: \(String(describing: segue.identifier))")
         if segue.identifier == "showDetail" {
-        if let nextViewController = segue.destination as? DetailViewController {
-            let document = documents[self.indexpath.row]
-            nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
-            nextViewController.textViewValue = "\(document.myTexts)\n"  + "\n:" + document.fileURL.absoluteString  //[self.indexpath.row
-            nextViewController.indexpathValue = self.indexpath
-            
-            
-            Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
-            Setup.popUp(context: self, msg: "Trzecia wiadomość")
-            
-            print("nextViewController:\(nextViewController)")
-            print("fileURL: \(document.fileURL)")
-            print("self.indexpath 2:\(self.indexpath)")
-           
-        }
+            if let nextViewController = segue.destination as? DetailViewController {
+                let document = documents[self.indexpath.row]
+                nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
+                nextViewController.textViewValue = "\(document.myTexts)\n"  + "\n:" + document.fileURL.absoluteString
+                nextViewController.indexpathValue = self.indexpath
+                            
+                Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
+                Setup.popUp(context: self, msg: "Trzecia wiadomość")
+                
+                print("nextViewController:\(nextViewController)")
+                print("fileURL: \(document.fileURL)")
+                print("self.indexpath 2:\(self.indexpath)")
+            }
       }
+      if segue.identifier == "showArchive" {
+        
+      }
+        
     }
 }
 
@@ -81,7 +83,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         return documents.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DocumentCell", for: indexPath) as! DocumentCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "documentCell", for: indexPath) as! DocumentCell
         cell.configure(document: documents[indexPath.row])
         return cell
     }
@@ -89,7 +91,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         self.indexpath = indexPath
         print("self.indexpath 1:\(self.indexpath)")
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        performSegue(withIdentifier: "showDetail", sender: cell)
+        let noZip = cloudPicker.sourceType != .filesZip
+        if noZip {
+          performSegue(withIdentifier: "showDetail", sender: cell)
+        }
+        else {
+            //Setup.popUp(context: self, msg: "Zbior ZIP")
+            performSegue(withIdentifier: "showArchive", sender: cell)
+        }
     }
 }
 

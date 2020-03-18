@@ -37,7 +37,7 @@ class CloudPicker: NSObject, UINavigationControllerDelegate {
     private weak var presentationController: UIViewController?
  
     private var folderURL: URL?
-    private var sourceType: SourceType = .folder
+    var sourceType: SourceType = .folder
     private var documents = [Document]()
     //private var lastSourceTypeData: SourceType = .folder
     //var myTexts2 = [String]()
@@ -201,7 +201,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                             }
                        
                         case .filesZip:
-                            var document = Document(fileURL: pickedURL)
+                            let document = Document(fileURL: pickedURL)
                             print("Opcjia filesZip")
                             if isFileUnhided(fileURL: pickedURL, folderURL: folderURL, sourceType: .filesZip) {
                                //fillDocument(forUrl: pickedURL, document: &document)

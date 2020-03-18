@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2C63154C24100226005096AA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63154B24100226005096AA /* DetailViewController.swift */; };
 		2C63B2D024110D2700A9F5D8 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63B2CF24110D2700A9F5D8 /* Setup.swift */; };
+		2C6870642422D52E0034DE43 /* ZipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6870632422D52E0034DE43 /* ZipViewController.swift */; };
+		2C6870662422D9490034DE43 /* ZipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6870652422D9490034DE43 /* ZipCollectionViewCell.swift */; };
 		30AF748F232DE56A006D10C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF748E232DE56A006D10C7 /* AppDelegate.swift */; };
 		30AF7493232DE56A006D10C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF7492232DE56A006D10C7 /* ViewController.swift */; };
 		30AF7496232DE56A006D10C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30AF7494232DE56A006D10C7 /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		2C63154B24100226005096AA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2C63B2CF24110D2700A9F5D8 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
+		2C6870632422D52E0034DE43 /* ZipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipViewController.swift; sourceTree = "<group>"; };
+		2C6870652422D9490034DE43 /* ZipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipCollectionViewCell.swift; sourceTree = "<group>"; };
 		30AF748B232DE56A006D10C7 /* SwiftyDocPickerNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyDocPickerNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AF748E232DE56A006D10C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30AF7492232DE56A006D10C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +81,8 @@
 				30AF748E232DE56A006D10C7 /* AppDelegate.swift */,
 				30AF7499232DE56D006D10C7 /* LaunchScreen.storyboard */,
 				30AF7494232DE56A006D10C7 /* Main.storyboard */,
+				2C6870632422D52E0034DE43 /* ZipViewController.swift */,
+				2C6870652422D9490034DE43 /* ZipCollectionViewCell.swift */,
 				30AF7497232DE56D006D10C7 /* Assets.xcassets */,
 				30AF74A6232DE708006D10C7 /* CloudPicker.swift */,
 				30AF7492232DE56A006D10C7 /* ViewController.swift */,
@@ -103,7 +109,6 @@
 				93475FA9F8B27DC9C279DF9C /* Pods-SwiftyDocPicker.debug.xcconfig */,
 				41B2DCC22B0A359666327EC8 /* Pods-SwiftyDocPicker.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -229,6 +234,8 @@
 				30AF74A7232DE708006D10C7 /* CloudPicker.swift in Sources */,
 				30AF748F232DE56A006D10C7 /* AppDelegate.swift in Sources */,
 				2C63154C24100226005096AA /* DetailViewController.swift in Sources */,
+				2C6870642422D52E0034DE43 /* ZipViewController.swift in Sources */,
+				2C6870662422D9490034DE43 /* ZipCollectionViewCell.swift in Sources */,
 				2C63B2D024110D2700A9F5D8 /* Setup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
