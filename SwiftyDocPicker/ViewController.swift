@@ -72,7 +72,7 @@ class ViewController: UIViewController, CloudPickerDelegate {
             }
       }
       if segue.identifier == "showArchive" {
-        
+         print("showArchive")
       }
         
     }

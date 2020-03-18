@@ -181,6 +181,7 @@
                                                 </label>
                                             </subviews>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="customSize" width="140" height="133"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="apS-2v-taJ" id="lNh-82-lYA"/>

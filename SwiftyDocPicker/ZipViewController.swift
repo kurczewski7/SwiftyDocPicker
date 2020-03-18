@@ -15,6 +15,7 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "zipCell", for: indexPath) as! ZipCollectionViewCell
+        cell.titleLabel.text = "\(indexPath.item)"
         //cell.configure(document: documents[indexPath.row])
         return cell
     }
