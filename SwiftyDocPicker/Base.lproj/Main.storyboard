@@ -147,39 +147,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybW-Te-HOr">
-                                <rect key="frame" x="16" y="0.0" width="343" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Vpt-z1-OGf">
-                                <rect key="frame" x="0.0" y="29" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nq8-Gh-y0A">
-                                    <size key="itemSize" width="149" height="142"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nq8-Gh-y0A">
+                                    <size key="itemSize" width="150" height="100"/>
+                                    <size key="headerReferenceSize" width="100" height="47"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="zipCell" id="E3i-mZ-Mtu" customClass="ZipCollectionViewCell" customModule="SwiftyDocPickerNew" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="140" height="133"/>
+                                        <rect key="frame" x="10" y="57" width="140" height="133"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EJK-ig-2v6">
                                             <rect key="frame" x="0.0" y="0.0" width="140" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apS-2v-taJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apS-2v-taJ">
                                                     <rect key="frame" x="8" y="8" width="124" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="apS-2v-taJ" firstAttribute="leading" secondItem="EJK-ig-2v6" secondAttribute="leadingMargin" id="LcX-ht-Q1A"/>
+                                                <constraint firstItem="apS-2v-taJ" firstAttribute="top" secondItem="EJK-ig-2v6" secondAttribute="topMargin" id="mqt-rt-n4j"/>
+                                                <constraint firstItem="apS-2v-taJ" firstAttribute="trailing" secondItem="EJK-ig-2v6" secondAttribute="trailingMargin" id="uYN-14-0J0"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="customSize" width="140" height="133"/>
@@ -188,6 +185,27 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="sectionHeader" id="TTQ-4I-zd6" customClass="ZipSectionHeaderView" customModule="SwiftyDocPickerNew" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUt-v2-PQC">
+                                            <rect key="frame" x="8" y="0.0" width="359" height="47"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="QUt-v2-PQC" firstAttribute="trailing" secondItem="TTQ-4I-zd6" secondAttribute="trailingMargin" id="8T0-ki-3Qn"/>
+                                        <constraint firstItem="QUt-v2-PQC" firstAttribute="leading" secondItem="TTQ-4I-zd6" secondAttribute="leadingMargin" id="HJO-Pb-rku"/>
+                                        <constraint firstAttribute="bottom" secondItem="QUt-v2-PQC" secondAttribute="bottom" id="dz9-Y4-SOm"/>
+                                        <constraint firstItem="QUt-v2-PQC" firstAttribute="top" secondItem="TTQ-4I-zd6" secondAttribute="top" id="wag-B4-dmu"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="label" destination="QUt-v2-PQC" id="X6S-62-I3x"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="mus-fB-evJ" id="j0o-eD-MaN"/>
                                     <outlet property="delegate" destination="mus-fB-evJ" id="qlp-jg-Pma"/>
