@@ -57,14 +57,18 @@ class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegat
         self.dismiss(animated: true)
     }
     func unzip(document: CloudPicker.Document) {
-        let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-         let destFolder = "Testownik_tmp"
-         let destPath = documentsURL    //.appendingPathComponent(destFolder, isDirectory: true)
+//        let sourcePath = sourceURL.relativePath
+//        let destPath = destURL.relativePath
+        let tmpFolder = "Testownik_tmp"
+        let sourcePath = document.fileURL.relativePath
         
-         print("srcPath \(document.fileURL.absoluteString)")
-         print("\ndestPath \(destPath.absoluteString)")
-         let success = SSZipArchive.unzipFile(atPath: document.fileURL.absoluteString, toDestination: destPath.absoluteString, delegate: self)
-         print("ZipArchive - Success: \(success)")
+        let pathTmp = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let destPath = pathTmp.appendingPathComponent(tmpFolder, isDirectory: true).relativePath
+        
+        print("srcPath \(sourcePath)")
+        print("\ndestPath \(destPath)")
+        let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
+        print("ZipArchive - Success: \(success)")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
