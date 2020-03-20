@@ -7,6 +7,9 @@
 //
 
 import UIKit
+
+import SSZipArchive
+
 //import SSZipArchive
 //import "SSZipArchive”
 //#import "SSZipArchive.h"
@@ -16,7 +19,7 @@ import UIKit
 
 
 
-class ViewController: UIViewController, CloudPickerDelegate {
+class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegate {
     var cloudPicker: CloudPicker!
     var documents : [CloudPicker.Document] = []
     var indexpath = IndexPath(row: 0, section: 0)
@@ -53,12 +56,23 @@ class ViewController: UIViewController, CloudPickerDelegate {
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
+    func unzip(document: CloudPicker.Document) {
+        let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+         let destFolder = "Testownik_tmp"
+         let destPath = documentsURL    //.appendingPathComponent(destFolder, isDirectory: true)
+        
+         print("srcPath \(document.fileURL.absoluteString)")
+         print("\ndestPath \(destPath.absoluteString)")
+         let success = SSZipArchive.unzipFile(atPath: document.fileURL.absoluteString, toDestination: destPath.absoluteString, delegate: self)
+         print("ZipArchive - Success: \(success)")
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segue: \(String(describing: segue.identifier))")
+        let document = documents[self.indexpath.row]
         if segue.identifier == "showDetail" {
             if let nextViewController = segue.destination as? DetailViewController {
-                let document = documents[self.indexpath.row]
+                //let document = documents[self.indexpath.row]
                 nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
                 nextViewController.textViewValue = "\(document.myTexts)\n"  + "\n:" + document.fileURL.absoluteString
                 nextViewController.indexpathValue = self.indexpath
@@ -72,6 +86,11 @@ class ViewController: UIViewController, CloudPickerDelegate {
             }
       }
       if segue.identifier == "showArchive" {
+        if let nextViewController = segue.destination as? ZipViewController {
+            nextViewController.zipFileNameValue = document.fileURL.lastPathComponent
+            //Setup.unzipFile(atPath: document.fileURL.absoluteString, delegate: self)
+            unzip(document: document)
+        }
          print("showArchive")
       }
         

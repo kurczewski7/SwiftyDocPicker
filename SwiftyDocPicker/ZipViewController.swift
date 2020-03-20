@@ -9,6 +9,7 @@
 import UIKit
 
 class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    var zipFileNameValue = "AA"
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,7 +42,7 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
         }
 
         //let searchTerm = searches[indexPath.section].searchTerm
-        headerView.label.text = "Zbiór Zip"//searchTerm
+        headerView.label.text = zipFileNameValue    //searchTerm
         return headerView
       default:
         // 4

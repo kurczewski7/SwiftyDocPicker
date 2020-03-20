@@ -128,19 +128,18 @@ class Setup {
     }
     
     //----
-    //private static let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+  
 
-//    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate)
-//        {
-//            let destFolder = "/Folder_Name"
-//            let destPath = documentsURL.appendingPathComponent(destFolder, isDirectory: true)
-//            let destString = destPath.absoluteString
-//
-//            if ( !FileManager.default.fileExists(atPath: destString) )
-//            {
-//                try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
-//            }
-//
-//            SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
-//        }
+    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate)
+        {
+            let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let destFolder = "/Testownik_tmp"
+            let destPath = documentsURL.appendingPathComponent(destFolder, isDirectory: true)
+            let destString = destPath.absoluteString
+            if ( !FileManager.default.fileExists(atPath: destString) )
+            {
+                try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
+            }
+            SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+        }
 }
