@@ -15,6 +15,7 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
     var cloudPicker: CloudPicker!
     var documents : [CloudPicker.Document] = []
     var indexpath = IndexPath(row: 0, section: 0)
+    var tmpDoc = [CloudPicker.Document]()
 
     
     override func viewDidLoad() {
@@ -23,7 +24,10 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
         if urlValue.count > 0 {
             let urlStr = urlValue+"/baza"
             let url = URL(fileURLWithPath: urlStr, isDirectory: true)
-            let tmpDoc = cloudPicker.documentFromZip(pickedURL: url)
+            tmpDoc = cloudPicker.documentFromZip(pickedURL: url)
+            tmpDoc.sort {
+                $0.fileURL.lastPathComponent < $1.fileURL.lastPathComponent
+            }
             print("tmpDoc:\(tmpDoc),\(tmpDoc.count)")
         }
         else {
@@ -34,13 +38,13 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
         // Do any additional setup after loading the view.
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return tmpDoc.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "zipCell", for: indexPath) as! ZipCollectionViewCell
-        cell.titleLabel.text = "\(indexPath.item)"
+        cell.titleLabel.text =  tmpDoc[indexPath.item].fileURL.lastPathComponent    // "\(indexPath.item)"
         //cell.configure(document: documents[indexPath.row])
         return cell
     }
