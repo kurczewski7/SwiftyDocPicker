@@ -7,17 +7,7 @@
 //
 
 import UIKit
-
 import SSZipArchive
-
-//import SSZipArchive
-//import "SSZipArchive”
-//#import "SSZipArchive.h"
-
-//    import ZipArchive
-    //import SSZipArchive
-
-
 
 class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegate {
     var cloudPicker: CloudPicker!
@@ -56,12 +46,8 @@ class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegat
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
-    func unzip(document: CloudPicker.Document) {
-//        let sourcePath = sourceURL.relativePath
-//        let destPath = destURL.relativePath
-        let tmpFolder = "Testownik_tmp"
+    func unzip(document: CloudPicker.Document, tmpFolder: String = "Testownik_tmp") -> String {
         let sourcePath = document.fileURL.relativePath
-        
         let pathTmp = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destPath = pathTmp.appendingPathComponent(tmpFolder, isDirectory: true).relativePath
         
@@ -69,6 +55,7 @@ class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegat
         print("\ndestPath \(destPath)")
         let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
         print("ZipArchive - Success: \(success)")
+        return success ? destPath : ""
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,8 +79,10 @@ class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegat
       if segue.identifier == "showArchive" {
         if let nextViewController = segue.destination as? ZipViewController {
             nextViewController.zipFileNameValue = document.fileURL.lastPathComponent
+            
             //Setup.unzipFile(atPath: document.fileURL.absoluteString, delegate: self)
-            unzip(document: document)
+            let urlStr = unzip(document: document)
+            nextViewController.urlValue = urlStr
         }
          print("showArchive")
       }

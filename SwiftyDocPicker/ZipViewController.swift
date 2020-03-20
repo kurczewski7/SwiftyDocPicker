@@ -9,9 +9,27 @@
 import UIKit
 
 class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    var zipFileNameValue = "AA"
+    var zipFileNameValue = ""
+    var urlValue = ""
+    
+    var cloudPicker: CloudPicker!
+    var documents : [CloudPicker.Document] = []
+    var indexpath = IndexPath(row: 0, section: 0)
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        cloudPicker = CloudPicker(presentationController: self)
+        if urlValue.count > 0 {
+            let urlStr = urlValue+"/baza"
+            let url = URL(fileURLWithPath: urlStr, isDirectory: true)
+            let tmpDoc = cloudPicker.documentFromZip(pickedURL: url)
+            print("tmpDoc:\(tmpDoc),\(tmpDoc.count)")
+        }
+        else {
+            print("Error Display Zip")
+        }
+        
 
         // Do any additional setup after loading the view.
     }

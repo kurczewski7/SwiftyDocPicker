@@ -207,14 +207,39 @@ extension CloudPicker: UIDocumentPickerDelegate {
                                //fillDocument(forUrl: pickedURL, document: &document)
                                documents.append(document)
                             }
-                    
-                        
                     }
                  }
 //                catch let error {
 //                    print("error:  \(error.localizedDescription)")
 //                }
         }
+    }
+    func documentFromZip(pickedURL: URL) -> [Document]{  //pickedURL: URL,
+        var documents_tmp = [Document]()
+        let shouldStopAccessing = pickedURL.startAccessingSecurityScopedResource()
+        defer {
+            if shouldStopAccessing {
+                pickedURL.stopAccessingSecurityScopedResource()
+            }
+        }
+        NSFileCoordinator().coordinate(readingItemAt: pickedURL, error: NSErrorPointer.none) { (folderURL) in
+                do {
+                    let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey] //isDirectoryKey isRegularFileKey
+                    let fileList = FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
+                    print("Folder_URL:\(folderURL.absoluteString)")
+                        for case let fileURL as URL in fileList! {
+                            if !fileURL.isDirectory {
+                                var document = Document(fileURL: fileURL)
+                                if isFileUnhided(fileURL: fileURL, folderURL: folderURL, sourceType: .folder) {
+                                    fillDocument(forUrl: fileURL, document: &document)
+                                    documents_tmp.append(document)
+                                    print("File_Zip_URL:\(fileURL.absoluteString)")
+                                }
+                            }
+                        }
+                    }
+            }
+        return documents_tmp
     }
     func fillDocument(forUrl url: URL, document: inout Document) {
         let txts = getText(fromCloudFilePath: url)
