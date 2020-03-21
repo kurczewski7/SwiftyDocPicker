@@ -239,6 +239,10 @@ extension CloudPicker: UIDocumentPickerDelegate {
                         }
                     }
             }
+            documents_tmp.sort {
+                $0.fileURL.lastPathComponent < $1.fileURL.lastPathComponent
+            }
+
         return documents_tmp
     }
     func fillDocument(forUrl url: URL, document: inout Document) {

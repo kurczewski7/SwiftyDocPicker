@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
         textView.text = textViewValue
         descriptionLabel.text = descriptionLabelValue
         print("self.indexpathValue 3:\(self.indexpathValue)")
-        textView.text =  textViewValue
+        //textView.text =  textViewValue
     }
     
 

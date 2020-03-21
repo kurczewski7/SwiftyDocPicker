@@ -216,6 +216,9 @@
                         <viewLayoutGuide key="safeArea" id="2aL-RJ-WbG"/>
                     </view>
                     <navigationItem key="navigationItem" id="NyY-Q4-Yb5"/>
+                    <connections>
+                        <segue destination="JWA-Zc-d6i" kind="show" identifier="showZipDetail" id="Srl-f2-0Sm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G3F-xJ-TJA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -244,4 +247,7 @@
             <point key="canvasLocation" x="-13260" y="-4520"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Srl-f2-0Sm"/>
+    </inferredMetricsTieBreakers>
 </document>

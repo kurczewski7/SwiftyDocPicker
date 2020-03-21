@@ -25,9 +25,6 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
             let urlStr = urlValue+"/baza"
             let url = URL(fileURLWithPath: urlStr, isDirectory: true)
             tmpDoc = cloudPicker.documentFromZip(pickedURL: url)
-            tmpDoc.sort {
-                $0.fileURL.lastPathComponent < $1.fileURL.lastPathComponent
-            }
             print("tmpDoc:\(tmpDoc),\(tmpDoc.count)")
         }
         else {
@@ -71,7 +68,59 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
         assert(false, "Invalid element type")
       }
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("didSelectItemAt")
+        self.indexpath = indexPath
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        performSegue(withIdentifier: "showZipDetail", sender: cell)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showZipDetail" {
+            let document = tmpDoc[self.indexpath.row]
+            if let nextViewController = segue.destination as? DetailViewController {
+                nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
+                nextViewController.textViewValue = document.myTexts
+                
+                
+                //nextViewController.zipFileNameValue = document.fileURL.lastPathComponent
+                //Setup.unzipFile(atPath: document.fileURL.absoluteString, delegate: self)
+                //let urlStr = unzip(document: document)
+                //nextViewController.urlValue = urlStr
+            }
+         print("showArchiveDetail")
+        }
+    }
 }
+
+        
+//        print("segue: \(String(describing: segue.identifier))")
+//        let document = documents[self.indexpath.row]
+//        if segue.identifier == "showDetail" {
+//            if let nextViewController = segue.destination as? DetailViewController {
+//                //let document = documents[self.indexpath.row]
+//                nextViewController.descriptionLabelValue = document.fileURL.lastPathComponent
+//                nextViewController.textViewValue = "\(document.myTexts)\n"  + "\n:" + document.fileURL.absoluteString
+//                nextViewController.indexpathValue = self.indexpath
+//                            
+//                Setup.displayToast(forView: self.view, message: "Druga wiadomość", seconds: 3)
+//                Setup.popUp(context: self, msg: "Trzecia wiadomość")
+//
+//                print("nextViewController:\(nextViewController)")
+//                print("fileURL: \(document.fileURL)")
+//                print("self.indexpath 2:\(self.indexpath)")
+//            }
+//      }
+//      if segue.identifier == "showArchive" {
+//        if let nextViewController = segue.destination as? ZipViewController {
+//            nextViewController.zipFileNameValue = document.fileURL.lastPathComponent
+//
+//            //Setup.unzipFile(atPath: document.fileURL.absoluteString, delegate: self)
+//            let urlStr = unzip(document: document)
+//            nextViewController.urlValue = urlStr
+//        }
+//         print("showArchive")
+//      }
+        
 //-------
 
 
