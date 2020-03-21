@@ -9,7 +9,7 @@
 import UIKit
 import SSZipArchive
 
-class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegate {
+class CloudViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegate {
     var cloudPicker: CloudPicker!
     var documents : [CloudPicker.Document] = []
     var indexpath = IndexPath(row: 0, section: 0)
@@ -90,7 +90,7 @@ class ViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDelegat
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension CloudViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return documents.count
     }

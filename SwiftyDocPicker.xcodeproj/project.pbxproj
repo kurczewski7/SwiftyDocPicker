@@ -13,7 +13,7 @@
 		2C6870662422D9490034DE43 /* ZipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6870652422D9490034DE43 /* ZipCollectionViewCell.swift */; };
 		2CA33C73242427B8005E746B /* ZipSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA33C72242427B8005E746B /* ZipSectionHeaderView.swift */; };
 		30AF748F232DE56A006D10C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF748E232DE56A006D10C7 /* AppDelegate.swift */; };
-		30AF7493232DE56A006D10C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF7492232DE56A006D10C7 /* ViewController.swift */; };
+		30AF7493232DE56A006D10C7 /* CloudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF7492232DE56A006D10C7 /* CloudViewController.swift */; };
 		30AF7496232DE56A006D10C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30AF7494232DE56A006D10C7 /* Main.storyboard */; };
 		30AF7498232DE56D006D10C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AF7497232DE56D006D10C7 /* Assets.xcassets */; };
 		30AF749B232DE56D006D10C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30AF7499232DE56D006D10C7 /* LaunchScreen.storyboard */; };
@@ -32,7 +32,7 @@
 		2CA33C72242427B8005E746B /* ZipSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipSectionHeaderView.swift; sourceTree = "<group>"; };
 		30AF748B232DE56A006D10C7 /* SwiftyDocPickerNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyDocPickerNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AF748E232DE56A006D10C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		30AF7492232DE56A006D10C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		30AF7492232DE56A006D10C7 /* CloudViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudViewController.swift; sourceTree = "<group>"; };
 		30AF7495232DE56A006D10C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		30AF7497232DE56D006D10C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30AF749A232DE56D006D10C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 				2C6870632422D52E0034DE43 /* ZipViewController.swift */,
 				2CA33C72242427B8005E746B /* ZipSectionHeaderView.swift */,
 				2C6870652422D9490034DE43 /* ZipCollectionViewCell.swift */,
-				30AF7492232DE56A006D10C7 /* ViewController.swift */,
+				30AF7492232DE56A006D10C7 /* CloudViewController.swift */,
 				2C63154B24100226005096AA /* DetailViewController.swift */,
 				30EBC562233BE10B001002D9 /* DocumentCell.swift */,
 				30AF7497232DE56D006D10C7 /* Assets.xcassets */,
@@ -231,7 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30EBC563233BE10B001002D9 /* DocumentCell.swift in Sources */,
-				30AF7493232DE56A006D10C7 /* ViewController.swift in Sources */,
+				30AF7493232DE56A006D10C7 /* CloudViewController.swift in Sources */,
 				30EBC567233BF3C6001002D9 /* Extensions.swift in Sources */,
 				30EBC565233BF329001002D9 /* Colors.swift in Sources */,
 				30AF74A7232DE708006D10C7 /* CloudPicker.swift in Sources */,
