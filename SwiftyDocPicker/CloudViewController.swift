@@ -64,8 +64,6 @@ class CloudViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDe
 //        }
     func unzip(document: CloudPicker.Document, tmpFolder: String = "Testownik_tmp") -> String {
         let sourcePath = document.fileURL.relativePath
-        //let zipfileName = document.fileURL.lastPathComponent.components(separatedBy: ".").first ?? ""
-        
         let pathTmp = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destPath = pathTmp.appendingPathComponent(tmpFolder, isDirectory: true).relativePath
         let zipfileNames = document.fileURL.lastPathComponent.components(separatedBy: ".")
@@ -79,6 +77,8 @@ class CloudViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDe
         print("zipfileName:\(zipfileName)")
         print("srcPath \(sourcePath)")
         print("\ndestPath \(destPath)")
+        deleteFolder(deleteFilePath: destPath)
+        
         let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
         let msg = success ? "Rozpakowanie ppprawne \(zipfileName )" : "Błąd rozpakowania"
         print("===\nmsg=\(msg)")
@@ -86,6 +86,16 @@ class CloudViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDe
         let fullDestPath =  zipfileName.isEmpty ? "" : "\(destPath)/\(zipfileName)"
         return (success ? fullDestPath : "")
     }
+    func deleteFolder(deleteFilePath: String) {
+//        try? FileManager.default.removeItem(at: URL(fileURLWithPath: ziPFolderPath))
+        do {
+          let fileManager = FileManager.default
+          if fileManager.fileExists(atPath: deleteFilePath) {
+          try fileManager.removeItem(atPath: deleteFilePath)
+             } else {   print("File does not exist")     }
+            }
+          catch let error as NSError {     print("An error took place: \(error)")      }
+        }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segue: \(String(describing: segue.identifier))")
