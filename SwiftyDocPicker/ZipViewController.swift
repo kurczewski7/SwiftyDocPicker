@@ -22,10 +22,10 @@ class ZipViewController: UIViewController, UICollectionViewDelegate, UICollectio
         super.viewDidLoad()
         cloudPicker = CloudPicker(presentationController: self)
         if urlValue.count > 0 {
-            let urlStr = urlValue+"/baza"
+            let urlStr = urlValue
             let url = URL(fileURLWithPath: urlStr, isDirectory: true)
             tmpDoc = cloudPicker.documentFromZip(pickedURL: url)
-            print("tmpDoc:\(tmpDoc),\(tmpDoc.count)")
+            //print("-----\ntmpDoc:\(tmpDoc),\(tmpDoc.count)")
         }
         else {
             print("Error Display Zip")

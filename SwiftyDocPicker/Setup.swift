@@ -130,7 +130,7 @@ class Setup {
     //----
   
 
-    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate)
+    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate, context: UIViewController? = nil)
         {
             let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let destFolder = "/Testownik_tmp"
@@ -140,6 +140,10 @@ class Setup {
             {
                 try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
             }
-            SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+            let ok = SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+            if let context = context {
+                let msg = ok ? "Rozpakowanie ppprawne \(path)" : "Błąd rozpakowania"
+              Setup.popUp(context: context, msg: msg)
+            }
         }
 }

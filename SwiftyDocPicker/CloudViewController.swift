@@ -46,16 +46,45 @@ class CloudViewController: UIViewController, CloudPickerDelegate, SSZipArchiveDe
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
+//    class func unzipFile(atPath path: String, delegate: SSZipArchiveDelegate, context: UIViewController? = nil)
+//        {
+//            let documentsURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//            let destFolder = "/Testownik_tmp"
+//            let destPath = documentsURL.appendingPathComponent(destFolder, isDirectory: true)
+//            let destString = destPath.absoluteString
+//            if ( !FileManager.default.fileExists(atPath: destString) )
+//            {
+//                try! FileManager.default.createDirectory(at: destPath, withIntermediateDirectories: true, attributes: nil)
+//            }
+//            let ok = SSZipArchive.unzipFile(atPath: path, toDestination: destString, delegate: delegate)
+//            if let context = context {
+//                let msg = ok ? "Rozpakowanie ppprawne \(path)" : "Błąd rozpakowania"
+//              Setup.popUp(context: context, msg: msg)
+//            }
+//        }
     func unzip(document: CloudPicker.Document, tmpFolder: String = "Testownik_tmp") -> String {
         let sourcePath = document.fileURL.relativePath
+        //let zipfileName = document.fileURL.lastPathComponent.components(separatedBy: ".").first ?? ""
+        
         let pathTmp = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destPath = pathTmp.appendingPathComponent(tmpFolder, isDirectory: true).relativePath
-        
+        let zipfileNames = document.fileURL.lastPathComponent.components(separatedBy: ".")
+        var zipfileName  = ""
+        if zipfileNames.count>0 {
+            for i  in 0..<zipfileNames.count - 1 {
+                zipfileName += zipfileNames[i]
+                zipfileName += (i < zipfileNames.count-2 ? "." : "" )
+            }
+        }
+        print("zipfileName:\(zipfileName)")
         print("srcPath \(sourcePath)")
         print("\ndestPath \(destPath)")
         let success = SSZipArchive.unzipFile(atPath: sourcePath, toDestination: destPath, delegate: self)
+        let msg = success ? "Rozpakowanie ppprawne \(zipfileName )" : "Błąd rozpakowania"
+        print("===\nmsg=\(msg)")
         print("ZipArchive - Success: \(success)")
-        return success ? destPath : ""
+        let fullDestPath =  zipfileName.isEmpty ? "" : "\(destPath)/\(zipfileName)"
+        return (success ? fullDestPath : "")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -235,6 +235,12 @@ extension CloudPicker: UIDocumentPickerDelegate {
                                     documents_tmp.append(document)
                                     print("File_Zip_URL:\(fileURL.absoluteString)")
                                 }
+                                else {
+                                    print("NO UNHIDE: File_Zip_URL:\(fileURL.absoluteString)")
+                                }
+                            }
+                            else {
+                                print("NO DIRECTORY: File_Zip_URL:\(fileURL.absoluteString)")
                             }
                         }
                     }
@@ -254,6 +260,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
     func isFileUnhided(fileURL url: URL, folderURL: URL, sourceType: SourceType)  -> Bool {
         let name = url.lastPathComponent
          print("isFileUnhided przed")
+        return true 
         if name.hasPrefix(".")                           {   return false   }
         if sourceType == .folder && folderURL !=  url.deletingLastPathComponent() {
             return false
@@ -268,12 +275,13 @@ extension CloudPicker: UIDocumentPickerDelegate {
             
             case .filesZip:
                 print("Zip")
-                if  values[values.count-1].uppercased() == "ZIP"   {
-                     return true
-                 }
-                 else {
-                     return false
-                 }
+                return true   // =================
+//                if  values[values.count-1].uppercased() == "ZIP"   {
+//                     return true
+//                 }
+//                 else {
+//                     return false
+//                 }
 
             case .folder:
                 print("folder")

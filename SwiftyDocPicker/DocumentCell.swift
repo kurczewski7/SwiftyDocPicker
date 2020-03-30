@@ -12,6 +12,7 @@ class DocumentCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         self.layer.cornerRadius = 8
+        //self.clipsToBounds
     }
     func configure(document: CloudPicker.Document) {
         self.titleLabel.text = document.fileURL.lastPathComponent
